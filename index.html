@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Feliz Cumpleaños #14, Briana! ✨</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Quicksand, Dancing Script & Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Tone.js para melodía suave sin archivos externos -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <!-- FontAwesome para íconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Quicksand', 'sans-serif'],
+                        script: ['Dancing Script', 'cursive'],
+                    },
+                    colors: {
+                        pastelPink: '#FFD6E0',
+                        softPink: '#FFF0F5',
+                        pastelLilac: '#E2D1F9',
+                        deepLilac: '#9D79D0',
+                        champagneGold: '#F3D08A',
+                        warmGold: '#D4AF37',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Estilos personalizados para animaciones flotantes, Polaroids y Pastel */
+        body {
+            background: linear-gradient(135deg, #FFF5F8 0%, #F5EEFF 50%, #FFF9EE 100%);
+            overflow-x: hidden;
+        }
+
+        /* Partículas flotantes de fondo */
+        .floating-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 0;
+            animation: floatUp linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(105vh) rotate(0deg) scale(0.8);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.7;
+            }
+            85% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(-10vh) rotate(360deg) scale(1.1);
+                opacity: 0;
+            }
+        }
+
+        /* Tarjetas Polaroid */
+        .polaroid {
+            background: #ffffff;
+            padding: 14px 14px 36px 14px;
+            box-shadow: 0 12px 30px rgba(157, 121, 208, 0.15);
+            border-radius: 12px;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid rgba(243, 208, 138, 0.4);
+        }
+
+        .polaroid:hover {
+            transform: translateY(-8px) rotate(0deg) scale(1.02) !important;
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.22);
+            z-index: 10;
+        }
+
+        /* Efecto Carta de Papel */
+        .letter-paper {
+            background-color: #ffffff;
+            background-image: radial-gradient(#E2D1F9 0.75px, transparent 0.75px), radial-gradient(#FFD6E0 0.75px, #ffffff 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+
+        /* Llama de la vela animada */
+        .flame {
+            transform-origin: center bottom;
+            animation: flicker 1.2s ease-in-out infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1) rotate(-2deg); opacity: 0.95; }
+            50% { transform: scale(1.08) rotate(2deg); opacity: 1; }
+            100% { transform: scale(0.95) rotate(-1deg); opacity: 0.9; }
+        }
+
+        .smoke {
+            animation: riseSmoke 2s ease-out forwards;
+        }
+
+        @keyframes riseSmoke {
+            0% { transform: translateY(0) scale(0.5); opacity: 0.8; }
+            100% { transform: translateY(-45px) scale(2); opacity: 0; }
+        }
+
+        /* Tarjeta giratoria para versos */
+        .flip-card {
+            perspective: 1000px;
+        }
+        .flip-card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.7s;
+            transform-style: preserve-3d;
+        }
+        .flip-card.flipped .flip-card-inner {
+            transform: rotateY(180deg);
+        }
+        .flip-card-front, .flip-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
+            border-radius: 1.5rem;
+        }
+        .flip-card-back {
+            transform: rotateY(180deg);
+        }
+
+        /* Animación suave de latido para corazones */
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        .animate-heartbeat {
+            animation: heartbeat 1.6s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="text-gray-700 antialiased selection:bg-pastelPink selection:text-deepLilac">
+
+    <!-- =========================================================================
+         🎵 AQUÍ PUEDES PONER TU MÚSICA EN MP3 🎵
+         Guarda tu canción en la misma carpeta que este archivo HTML y llámala:
+         "musica.mp3" (o cambia el nombre en src="musica.mp3" por el de tu canción).
+         ========================================================================= -->
+    <audio id="musica-fondo" loop preload="auto">
+        <source src="musica.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Contenedor de Partículas Flotantes (Corazones, Flores y Destellos) -->
+    <div id="particles-container"></div>
+
+    <!-- Barra de Navegación Flotante / Control de Música -->
+    <nav class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-4xl bg-white/85 backdrop-blur-md border border-pastelPink/60 shadow-lg rounded-full px-4 py-2.5 flex items-center justify-between">
+        <a href="#inicio" class="font-script text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-amber-500 bg-clip-text text-transparent pl-2">
+            Briana 💖 14
+        </a>
+
+        <div class="hidden md:flex items-center space-x-5 text-sm font-medium text-gray-600">
+            <a href="#galeria" class="hover:text-pink-500 transition">Recuerdos</a>
+            <a href="#carta" class="hover:text-purple-500 transition">Carta</a>
+            <a href="#razones" class="hover:text-rose-500 transition">Tú & Yo</a>
+            <a href="#versos" class="hover:text-amber-500 transition">Versos</a>
+            <a href="#pastel" class="hover:text-pink-500 transition">Deseo</a>
+        </div>
+
+        <div class="flex items-center gap-2">
+            <!-- Botón principal de Play/Pause para musica.mp3 -->
+            <button id="music-btn" onclick="toggleMusic()" class="flex items-center gap-2 bg-gradient-to-r from-pink-100 to-purple-100 hover:from-pink-200 hover:to-purple-200 text-purple-700 px-3.5 py-1.5 rounded-full text-xs font-semibold transition shadow-sm border border-purple-200" title="Reproducir o pausar música">
+                <i id="music-icon" class="fas fa-play"></i>
+                <span id="music-text">Música</span>
+            </button>
+            <!-- Botón opcional para probar un MP3 desde el dispositivo -->
+            <label for="mp3-picker" class="cursor-pointer bg-pink-50 hover:bg-pink-100 text-pink-600 px-2.5 py-1.5 rounded-full text-xs font-semibold border border-pink-200 transition" title="Probar otro archivo MP3">
+                <i class="fas fa-folder-open"></i>
+            </label>
+            <input id="mp3-picker" type="file" accept="audio/mp3,audio/*" class="hidden" onchange="loadCustomMP3(event)">
+
+            <button onclick="launchHeartAndFlowerRain()" class="bg-gradient-to-r from-pink-400 to-rose-400 hover:from-pink-500 hover:to-rose-500 text-white p-2 rounded-full text-xs font-bold shadow-sm transition transform active:scale-90" title="¡Lluvia de corazones y flores!">
+                🌸
+            </button>
+        </div>
+    </nav>
+
+    <!-- 1. PANTALLA DE BIENVENIDA / PORTADA -->
+    <header id="inicio" class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 pt-20 pb-12 z-10">
+        <div class="max-w-3xl mx-auto bg-white/80 backdrop-blur-md border-2 border-white shadow-2xl shadow-pink-200/50 rounded-3xl p-8 sm:p-12 relative overflow-hidden">
+            <!-- Detalles decorativos florales en esquinas -->
+            <div class="absolute -top-6 -left-6 w-28 h-28 bg-pastelPink/60 rounded-full blur-xl"></div>
+            <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-pastelLilac/60 rounded-full blur-xl"></div>
+            <div class="absolute top-4 right-5 text-2xl opacity-75 animate-pulse">🌸</div>
+            <div class="absolute bottom-4 left-5 text-2xl opacity-75 animate-pulse">🌷</div>
+
+            <span class="inline-block px-4 py-1.5 rounded-full bg-gradient-to-r from-pink-100 via-purple-100 to-amber-100 text-pink-600 font-display font-bold text-xs sm:text-sm tracking-wider uppercase mb-4 border border-pink-200/80 shadow-sm">
+                🌸 Para la chica más especial • Capítulo 14 💖
+            </span>
+
+            <h1 class="font-display text-4xl sm:text-6xl font-bold text-gray-800 leading-tight mb-3">
+                ¡Feliz Cumpleaños <span class="bg-gradient-to-r from-pink-500 via-purple-500 to-amber-500 bg-clip-text text-transparent">#14</span>,
+                <span class="block font-script text-6xl sm:text-7xl text-pink-500 mt-2 drop-shadow-sm">Briana!</span>
+            </h1>
+
+            <p class="text-gray-600 text-base sm:text-lg max-w-xl mx-auto mt-4 mb-8 leading-relaxed">
+                Hoy celebro los 14 años de la persona que llegó a iluminar mis días. Eres única en mi vida, te quiero muchísimo y este pequeño rincón está hecho solo para ti. 🌹✨
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="#carta" onclick="launchHeartAndFlowerRain()" class="w-full sm:w-auto px-8 py-3.5 rounded-full bg-gradient-to-r from-pink-400 via-rose-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white font-display font-bold text-base shadow-lg shadow-pink-300/50 transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                    <i class="fas fa-heart animate-heartbeat"></i> Leer mi Dedicatoria
+                </a>
+                <button onclick="launchHeartAndFlowerRain()" class="w-full sm:w-auto px-7 py-3.5 rounded-full bg-white hover:bg-pink-50 text-pink-600 border-2 border-pastelPink font-display font-bold text-base shadow-md transition transform hover:-translate-y-0.5 flex items-center justify-center gap-2">
+                    🌸 Lluvia de Flores & Confeti
+                </button>
+            </div>
+        </div>
+
+        <a href="#galeria" class="mt-10 text-pink-400 hover:text-pink-600 transition animate-bounce">
+            <i class="fas fa-chevron-down text-2xl"></i>
+        </a>
+    </header>
+
+    <!-- 2. GALERÍA DE RECUERDOS FIJOS EN HTML (FOTOS Y VIDEOS) -->
+    <section id="galeria" class="relative py-16 px-4 max-w-6xl mx-auto z-10">
+        <div class="text-center mb-10">
+            <span class="text-pink-500 font-semibold text-sm uppercase tracking-widest">🌷 Tus Mejores Momentos 🌷</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-gray-800 mt-1">Galería de Recuerdos 📸</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto mt-2 text-sm sm:text-base">
+                Cada foto y cada video tuyo me recuerda lo increíble que eres.
+                <span class="block text-xs text-purple-600 mt-1">(Para dejarlos fijos al enviar la página, guarda tus archivos en la misma carpeta como <strong>foto1.jpg</strong>, <strong>foto2.jpg</strong>, <strong>video1.mp4</strong> y <strong>video2.mp4</strong>).</span>
+            </p>
+
+            <!-- Botón opcional de previsualización rápida -->
+            <div class="mt-5">
+                <label for="bulk-upload" class="cursor-pointer inline-flex items-center gap-2 bg-white/90 hover:bg-pink-50 text-purple-700 font-display font-semibold px-5 py-2.5 rounded-full border border-purple-200 shadow-sm text-xs sm:text-sm transition">
+                    <i class="fas fa-images text-pink-500"></i>
+                    <span>Previsualizar fotos/videos desde mi galería ahora</span>
+                </label>
+                <input id="bulk-upload" type="file" multiple accept="image/*,video/*" class="hidden" onchange="handleBulkFiles(event)">
+            </div>
+        </div>
+
+        <!-- Cuadrícula de Polaroids -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 items-start">
+
+            <!-- =========================================================
+                 🖼️ POLAROID 1: FOTO 1 (Cambia "foto1.jpg" por tu archivo)
+                 ========================================================= -->
+            <div class="polaroid -rotate-2 relative" id="card-0">
+                <span class="absolute -top-3 -left-3 text-2xl z-20 drop-shadow">🌸</span>
+                <div class="relative aspect-[3/4] w-full bg-gradient-to-br from-pink-50 to-purple-100 rounded-lg overflow-hidden flex flex-col items-center justify-center border border-pink-200/60">
+                    <!-- Imagen vinculada directamente -->
+                    <img id="preview-0" src="foto1.jpg" class="w-full h-full object-cover" alt="Briana Foto 1"
+                         onload="document.getElementById('placeholder-0').classList.add('hidden'); document.getElementById('change-0').classList.remove('hidden');"
+                         onerror="this.classList.add('hidden'); document.getElementById('placeholder-0').classList.remove('hidden');">
+
+                    <div id="placeholder-0" class="hidden text-center p-4 flex flex-col items-center">
+                        <div class="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center text-pink-400 shadow-sm mb-3">
+                            <i class="fas fa-heart text-xl"></i>
+                        </div>
+                        <p class="text-xs font-semibold text-purple-700 mb-1">Foto 1 (foto1.jpg)</p>
+                        <p class="text-[11px] text-gray-500 mb-3">Guarda tu foto como <b>foto1.jpg</b> o cárgala aquí:</p>
+                        <label for="file-0" class="cursor-pointer bg-pink-400 hover:bg-pink-500 text-white text-xs font-semibold px-4 py-2 rounded-full shadow transition">
+                            Elegir Foto
+                        </label>
+                    </div>
+                    <label for="file-0" id="change-0" class="hidden absolute bottom-2 right-2 cursor-pointer bg-white/85 hover:bg-white text-gray-700 text-xs px-2.5 py-1 rounded-full shadow backdrop-blur-sm">
+                        <i class="fas fa-sync-alt"></i>
+                    </label>
+                    <input id="file-0" type="file" accept="image/*" class="hidden" onchange="loadSingleMedia(event, 0, 'image')">
+                </div>
+                <p class="font-script text-2xl text-center text-pink-600 mt-4">Mi persona favorita 💖</p>
+            </div>
+
+            <!-- =========================================================
+                 🖼️ POLAROID 2: FOTO 2 (Cambia "foto2.jpg" por tu archivo)
+                 ========================================================= -->
+            <div class="polaroid rotate-2 relative" id="card-1">
+                <span class="absolute -top-3 -right-3 text-2xl z-20 drop-shadow">🌷</span>
+                <div class="relative aspect-[3/4] w-full bg-gradient-to-br from-purple-50 to-amber-50 rounded-lg overflow-hidden flex flex-col items-center justify-center border border-purple-200/60">
+                    <!-- Imagen vinculada directamente -->
+                    <img id="preview-1" src="foto2.jpg" class="w-full h-full object-cover" alt="Briana Foto 2"
+                         onload="document.getElementById('placeholder-1').classList.add('hidden'); document.getElementById('change-1').classList.remove('hidden');"
+                         onerror="this.classList.add('hidden'); document.getElementById('placeholder-1').classList.remove('hidden');">
+
+                    <div id="placeholder-1" class="hidden text-center p-4 flex flex-col items-center">
+                        <div class="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center text-purple-400 shadow-sm mb-3">
+                            <i class="fas fa-sparkles text-xl"></i>
+                        </div>
+                        <p class="text-xs font-semibold text-purple-700 mb-1">Foto 2 (foto2.jpg)</p>
+                        <p class="text-[11px] text-gray-500 mb-3">Guarda tu foto como <b>foto2.jpg</b> o cárgala aquí:</p>
+                        <label for="file-1" class="cursor-pointer bg-purple-400 hover:bg-purple-500 text-white text-xs font-semibold px-4 py-2 rounded-full shadow transition">
+                            Elegir Foto
+                        </label>
+                    </div>
+                    <label for="file-1" id="change-1" class="hidden absolute bottom-2 right-2 cursor-pointer bg-white/85 hover:bg-white text-gray-700 text-xs px-2.5 py-1 rounded-full shadow backdrop-blur-sm">
+                        <i class="fas fa-sync-alt"></i>
+                    </label>
+                    <input id="file-1" type="file" accept="image/*" class="hidden" onchange="loadSingleMedia(event, 1, 'image')">
+                </div>
+                <p class="font-script text-2xl text-center text-purple-600 mt-4">Hermosa por dentro y fuera 🌸</p>
+            </div>
+
+            <!-- =========================================================
+                 🎬 POLAROID 3: VIDEO 1 (Cambia "video1.mp4" por tu archivo)
+                 ========================================================= -->
+            <div class="polaroid -rotate-1 relative" id="card-2">
+                <span class="absolute -top-3 -left-3 text-2xl z-20 drop-shadow">🌹</span>
+                <div class="relative aspect-[3/4] w-full bg-gradient-to-br from-amber-50 to-pink-100 rounded-lg overflow-hidden flex flex-col items-center justify-center border border-amber-200/60">
+                    <!-- Video vinculado directamente -->
+                    <video id="preview-2" src="video1.mp4" class="w-full h-full object-cover" controls playsinline loop
+                           onloadeddata="document.getElementById('placeholder-2').classList.add('hidden'); document.getElementById('change-2').classList.remove('hidden');"
+                           onerror="this.classList.add('hidden'); document.getElementById('placeholder-2').classList.remove('hidden');"></video>
+
+                    <div id="placeholder-2" class="hidden text-center p-4 flex flex-col items-center">
+                        <div class="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center text-amber-500 shadow-sm mb-3">
+                            <i class="fas fa-video text-xl"></i>
+                        </div>
+                        <p class="text-xs font-semibold text-amber-800 mb-1">Video 1 (video1.mp4)</p>
+                        <p class="text-[11px] text-gray-500 mb-3">Guarda tu video como <b>video1.mp4</b> o cárgalo aquí:</p>
+                        <label for="file-2" class="cursor-pointer bg-amber-400 hover:bg-amber-500 text-amber-950 text-xs font-semibold px-4 py-2 rounded-full shadow transition">
+                            Elegir Video
+                        </label>
+                    </div>
+                    <label for="file-2" id="change-2" class="hidden absolute top-2 right-2 cursor-pointer bg-white/85 hover:bg-white text-gray-700 text-xs px-2.5 py-1 rounded-full shadow backdrop-blur-sm z-10">
+                        <i class="fas fa-sync-alt"></i>
+                    </label>
+                    <input id="file-2" type="file" accept="video/*" class="hidden" onchange="loadSingleMedia(event, 2, 'video')">
+                </div>
+                <p class="font-script text-2xl text-center text-rose-500 mt-4">Me encantas demasiado ✨</p>
+            </div>
+
+            <!-- =========================================================
+                 🎬 POLAROID 4: VIDEO 2 (Cambia "video2.mp4" por tu archivo)
+                 ========================================================= -->
+            <div class="polaroid rotate-2 relative" id="card-3">
+                <span class="absolute -top-3 -right-3 text-2xl z-20 drop-shadow">💐</span>
+                <div class="relative aspect-[3/4] w-full bg-gradient-to-br from-pink-100 to-purple-100 rounded-lg overflow-hidden flex flex-col items-center justify-center border border-pink-200/60">
+                    <!-- Video vinculado directamente -->
+                    <video id="preview-3" src="video2.mp4" class="w-full h-full object-cover" controls playsinline loop
+                           onloadeddata="document.getElementById('placeholder-3').classList.add('hidden'); document.getElementById('change-3').classList.remove('hidden');"
+                           onerror="this.classList.add('hidden'); document.getElementById('placeholder-3').classList.remove('hidden');"></video>
+
+                    <div id="placeholder-3" class="hidden text-center p-4 flex flex-col items-center">
+                        <div class="w-14 h-14 rounded-full bg-white/90 flex items-center justify-center text-pink-500 shadow-sm mb-3">
+                            <i class="fas fa-film text-xl"></i>
+                        </div>
+                        <p class="text-xs font-semibold text-pink-700 mb-1">Video 2 (video2.mp4)</p>
+                        <p class="text-[11px] text-gray-500 mb-3">Guarda tu video como <b>video2.mp4</b> o cárgalo aquí:</p>
+                        <label for="file-3" class="cursor-pointer bg-gradient-to-r from-pink-400 to-purple-400 hover:from-pink-500 hover:to-purple-500 text-white text-xs font-semibold px-4 py-2 rounded-full shadow transition">
+                            Elegir Video
+                        </label>
+                    </div>
+                    <label for="file-3" id="change-3" class="hidden absolute top-2 right-2 cursor-pointer bg-white/85 hover:bg-white text-gray-700 text-xs px-2.5 py-1 rounded-full shadow backdrop-blur-sm z-10">
+                        <i class="fas fa-sync-alt"></i>
+                    </label>
+                    <input id="file-3" type="file" accept="video/*" class="hidden" onchange="loadSingleMedia(event, 3, 'video')">
+                </div>
+                <p class="font-script text-2xl text-center text-pink-600 mt-4">¡Felices 14, mi niña! 💕</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- 3. CARTA DE DEDICATORIA Y AMOR SINCERO -->
+    <section id="carta" class="relative py-16 px-4 max-w-4xl mx-auto z-10">
+        <div class="letter-paper rounded-3xl p-8 sm:p-14 shadow-xl border-2 border-champagneGold/60 relative">
+            <!-- Sello decorativo superior -->
+            <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-pink-500 to-rose-400 text-white flex items-center justify-center text-2xl shadow-lg mx-auto -mt-16 mb-6 border-4 border-white animate-heartbeat">
+                💖
+            </div>
+
+            <div class="text-center mb-8">
+                <span class="text-xs uppercase tracking-widest text-rose-500 font-bold">🌹 Con todo mi corazón para ti 🌹</span>
+                <h2 class="font-script text-4xl sm:text-5xl text-purple-700 mt-1">Para Briana, la única en mi vida</h2>
+            </div>
+
+            <div class="space-y-5 text-gray-700 text-base sm:text-lg leading-relaxed font-normal">
+                <p class="font-semibold text-pink-600 text-xl">Mi querida Briana,</p>
+                <p>
+                    Hoy es un día muy especial porque celebras tus <strong>14 años</strong>, y quiero aprovechar cada palabra para decirte cuánto te quiero y lo inmensamente importante que eres para mí. Desde que llegaste a mi vida, todo tiene más color, más alegría y más sentido.
+                </p>
+                <p>
+                    Quiero que sepas con total sinceridad que <strong>eres la única en mi vida</strong>. No hay nadie más que ocupe mis pensamientos como lo haces tú, ni nadie cuya sonrisa me haga tan feliz. Te quiero demasiado y lo que menos quisiera en este mundo es perderte; al contrario, mi mayor deseo es cuidarte, apoyarte y seguir compartiendo momentos inolvidables contigo.
+                </p>
+                <p>
+                    Me encantaría poder estar siempre a tu lado, caminar contigo, hacerte reír en tus días difíciles y celebrar cada uno de tus logros. Te mereces todo lo bonito de este universo: flores, detalles, cariño sincero y alguien que te valore tal y como eres.
+                </p>
+                <p class="font-medium text-purple-700 italic">
+                    "Ojalá la vida me regale la dicha de seguir cerca de ti y, si tú me lo permites, ser esa persona especial que esté a tu lado." 💕
+                </p>
+            </div>
+
+            <div class="mt-10 pt-6 border-t border-pink-200/70 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <div class="text-center sm:text-left">
+                    <p class="text-sm text-gray-500">Con todo mi cariño y mi corazón entero,</p>
+                    <p class="font-script text-3xl text-pink-500 mt-1">Quien te quiere muchísimo y sueña con estar contigo 💖</p>
+                </div>
+                <button onclick="launchHeartAndFlowerRain()" class="px-6 py-3 rounded-full bg-gradient-to-r from-pink-400 to-rose-400 hover:from-pink-500 hover:to-rose-500 text-white text-sm font-semibold shadow-md transition flex items-center gap-2">
+                    <span>Enviar mil corazones</span> 💐
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3.5 SECCIÓN NUEVA: RAZONES POR LAS QUE ME ENCANTAS -->
+    <section id="razones" class="relative py-14 px-4 max-w-5xl mx-auto z-10">
+        <div class="bg-white/75 backdrop-blur-md rounded-3xl p-8 sm:p-10 border-2 border-pastelPink shadow-lg">
+            <div class="text-center mb-8">
+                <span class="text-rose-500 font-semibold text-xs sm:text-sm uppercase tracking-widest">🌷 Lo que siento por ti 🌷</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-bold text-gray-800 mt-1">Razones por las que eres única para mí</h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <div class="flex items-start gap-4 p-4 rounded-2xl bg-pink-50/80 border border-pink-200/60">
+                    <span class="text-2xl mt-0.5">🌹</span>
+                    <div>
+                        <h3 class="font-display font-bold text-pink-700">Eres la única en mi corazón</h3>
+                        <p class="text-sm text-gray-600 mt-1">No tengo ojos para nadie más; desde que te conocí, supe que eras alguien verdaderamente especial que no quiero perder jamás.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4 p-4 rounded-2xl bg-purple-50/80 border border-purple-200/60">
+                    <span class="text-2xl mt-0.5">✨</span>
+                    <div>
+                        <h3 class="font-display font-bold text-purple-700">Tu forma de ser tan bonita</h3>
+                        <p class="text-sm text-gray-600 mt-1">Tu mirada, tu voz y tu manera de ver la vida hacen que cada segundo hablando o estando contigo valga oro.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4 p-4 rounded-2xl bg-amber-50/80 border border-amber-200/60">
+                    <span class="text-2xl mt-0.5">🦋</span>
+                    <div>
+                        <h3 class="font-display font-bold text-amber-700">Me encantaría estar a tu lado</h3>
+                        <p class="text-sm text-gray-600 mt-1">Sueño con poder acompañarte en tus días buenos y malos, sacarte una sonrisa siempre y cuidarte como te mereces.</p>
+                    </div>
+                </div>
+
+                <div class="flex items-start gap-4 p-4 rounded-2xl bg-rose-50/80 border border-rose-200/60">
+                    <span class="text-2xl mt-0.5">💐</span>
+                    <div>
+                        <h3 class="font-display font-bold text-rose-700">Te mereces todo lo hermoso</h3>
+                        <p class="text-sm text-gray-600 mt-1">En tus 14 años mereces los detalles más lindos, flores, cariño sincero y alguien que te quiera de verdad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. VERSOS Y FRASES DE AMOR (TARJETAS INTERACTIVAS) -->
+    <section id="versos" class="relative py-16 px-4 max-w-6xl mx-auto z-10">
+        <div class="text-center mb-12">
+            <span class="text-purple-500 font-semibold text-sm uppercase tracking-widest">💌 Versos desde el Alma 💌</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-gray-800 mt-1">Versos & Promesas para Briana ✨</h2>
+            <p class="text-gray-600 mt-2 text-sm sm:text-base">Toca cada tarjeta para descubrir lo que mi corazón siente por ti.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Tarjeta 1 -->
+            <div class="flip-card h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner shadow-lg rounded-3xl">
+                    <div class="flip-card-front bg-gradient-to-br from-pink-100 via-white to-pink-50 border-2 border-pink-200 p-6 flex flex-col items-center justify-center text-center">
+                        <span class="text-4xl mb-3">🌸</span>
+                        <h3 class="font-display font-bold text-xl text-pink-600">Tu Sonrisa</h3>
+                        <p class="text-xs text-gray-500 mt-2">Toca para leer el verso</p>
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-pink-400 to-rose-400 text-white p-6 flex flex-col items-center justify-center text-center">
+                        <p class="font-script text-2xl sm:text-3xl leading-snug">
+                            "Hay sonrisas que iluminan un instante, y está la tuya, Briana, que alegra todo mi mundo sin siquiera intentarlo."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 2 -->
+            <div class="flip-card h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner shadow-lg rounded-3xl">
+                    <div class="flip-card-front bg-gradient-to-br from-purple-100 via-white to-purple-50 border-2 border-purple-200 p-6 flex flex-col items-center justify-center text-center">
+                        <span class="text-4xl mb-3">🦋</span>
+                        <h3 class="font-display font-bold text-xl text-purple-600">Tus 14 Primaveras</h3>
+                        <p class="text-xs text-gray-500 mt-2">Toca para leer el verso</p>
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-purple-500 to-indigo-400 text-white p-6 flex flex-col items-center justify-center text-center">
+                        <p class="font-script text-2xl sm:text-3xl leading-snug">
+                            "Catorce rosas florecen hoy en tu jardín, pero ninguna se compara con la belleza de tenerte en mi vida."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 3 -->
+            <div class="flip-card h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner shadow-lg rounded-3xl">
+                    <div class="flip-card-front bg-gradient-to-br from-amber-100 via-white to-amber-50 border-2 border-amber-200 p-6 flex flex-col items-center justify-center text-center">
+                        <span class="text-4xl mb-3">💖</span>
+                        <h3 class="font-display font-bold text-xl text-amber-600">La Única en mi Vida</h3>
+                        <p class="text-xs text-gray-500 mt-2">Toca para leer el verso</p>
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-amber-400 to-orange-300 text-amber-950 p-6 flex flex-col items-center justify-center text-center">
+                        <p class="font-script text-2xl sm:text-3xl leading-snug">
+                            "Entre millones de estrellas en el cielo, mis ojos siempre te elegirían a ti; eres la única en mi vida y no te quiero perder."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 4 (Nueva) -->
+            <div class="flip-card h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner shadow-lg rounded-3xl">
+                    <div class="flip-card-front bg-gradient-to-br from-rose-100 via-white to-pink-50 border-2 border-rose-200 p-6 flex flex-col items-center justify-center text-center">
+                        <span class="text-4xl mb-3">🌹</span>
+                        <h3 class="font-display font-bold text-xl text-rose-600">Estar a tu Lado</h3>
+                        <p class="text-xs text-gray-500 mt-2">Toca para leer el verso</p>
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-rose-500 to-pink-500 text-white p-6 flex flex-col items-center justify-center text-center">
+                        <p class="font-script text-2xl sm:text-3xl leading-snug">
+                            "Si me dieran a elegir un lugar en el mundo donde quedarme, sin dudarlo elegiría estar siempre a tu lado."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 5 (Nueva) -->
+            <div class="flip-card h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner shadow-lg rounded-3xl">
+                    <div class="flip-card-front bg-gradient-to-br from-fuchsia-100 via-white to-purple-50 border-2 border-fuchsia-200 p-6 flex flex-col items-center justify-center text-center">
+                        <span class="text-4xl mb-3">🌷</span>
+                        <h3 class="font-display font-bold text-xl text-fuchsia-600">Mi Mayor Deseo</h3>
+                        <p class="text-xs text-gray-500 mt-2">Toca para leer el verso</p>
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-fuchsia-500 to-purple-500 text-white p-6 flex flex-col items-center justify-center text-center">
+                        <p class="font-script text-2xl sm:text-3xl leading-snug">
+                            "Te quiero tanto que cada latido lleva tu nombre; ojalá algún día pueda llamarte mi novia y hacerte la chica más feliz."
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tarjeta 6 (Nueva) -->
+            <div class="flip-card h-64 cursor-pointer" onclick="this.classList.toggle('flipped')">
+                <div class="flip-card-inner shadow-lg rounded-3xl">
+                    <div class="flip-card-front bg-gradient-to-br from-pink-100 via-amber-50 to-white border-2 border-pink-200 p-6 flex flex-col items-center justify-center text-center">
+                        <span class="text-4xl mb-3">💐</span>
+                        <h3 class="font-display font-bold text-xl text-pink-600">Para Siempre Tú</h3>
+                        <p class="text-xs text-gray-500 mt-2">Toca para leer el verso</p>
+                    </div>
+                    <div class="flip-card-back bg-gradient-to-br from-pink-500 via-rose-400 to-amber-400 text-white p-6 flex flex-col items-center justify-center text-center">
+                        <p class="font-script text-2xl sm:text-3xl leading-snug">
+                            "Eres el sueño más bonito que no quiero dejar ir; gracias por existir y por hacerme sentir algo tan real."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. PASTEL VIRTUAL INTERACTIVO -->
+    <section id="pastel" class="relative py-16 px-4 max-w-3xl mx-auto text-center z-10">
+        <div class="bg-white/85 backdrop-blur-md rounded-3xl p-8 sm:p-12 shadow-xl border-2 border-pastelPink">
+            <span class="text-pink-500 font-semibold text-sm uppercase tracking-widest">🎂 ¡Momento del Deseo! 🎂</span>
+            <h2 class="font-display text-3xl sm:text-4xl font-bold text-gray-800 mt-1">Pide un Deseo, Briana ✨</h2>
+            <p id="cake-instruction" class="text-gray-600 mt-2 text-sm sm:text-base">
+                Cierra los ojos, pide tu mejor deseo para estos 14 años y haz clic en la vela o en el botón para soplarla.
+            </p>
+
+            <!-- Pastel SVG Interactivo -->
+            <div class="my-8 flex justify-center">
+                <div id="cake-container" onclick="blowCandle()" class="cursor-pointer relative select-none group transition transform hover:scale-105" title="Haz clic para soplar la vela">
+                    <svg width="260" height="250" viewBox="0 0 260 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Plato dorado -->
+                        <ellipse cx="130" cy="225" rx="115" ry="16" fill="#F3D08A"/>
+                        <ellipse cx="130" cy="222" rx="105" ry="12" fill="#FFF8E7"/>
+
+                        <!-- Piso inferior del pastel (Lila pastel) -->
+                        <rect x="45" y="155" width="170" height="65" rx="14" fill="#E2D1F9"/>
+                        <!-- Glaseado inferior -->
+                        <path d="M45 168 Q65 185 85 168 Q105 185 130 168 Q155 185 175 168 Q195 185 215 168 L215 155 Q215 148 205 148 L55 148 Q45 148 45 155 Z" fill="#FFFFFF"/>
+                        <!-- Puntitos decorativos -->
+                        <circle cx="70" cy="195" r="4" fill="#FFD6E0"/>
+                        <circle cx="100" cy="202" r="4" fill="#F3D08A"/>
+                        <circle cx="130" cy="195" r="4" fill="#FF8FAB"/>
+                        <circle cx="160" cy="202" r="4" fill="#F3D08A"/>
+                        <circle cx="190" cy="195" r="4" fill="#FFD6E0"/>
+
+                        <!-- Piso superior del pastel (Rosa suave) -->
+                        <rect x="70" y="100" width="120" height="52" rx="12" fill="#FFD6E0"/>
+                        <!-- Glaseado superior -->
+                        <path d="M70 112 Q90 126 110 112 Q130 126 150 112 Q170 126 190 112 L190 100 Q190 94 180 94 L80 94 Q70 94 70 100 Z" fill="#FFF0F5"/>
+
+                        <!-- Vela número 14 -->
+                        <g transform="translate(103, 44)">
+                            <rect x="6" y="14" width="12" height="36" rx="4" fill="#D4AF37"/>
+                            <path d="M2 20 L12 14 L12 24 Z" fill="#D4AF37"/>
+                            <path d="M38 14 L26 34 L46 34 M40 14 L40 50" stroke="#D4AF37" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </g>
+
+                        <!-- Llamas de la vela -->
+                        <g id="candle-flames">
+                            <path class="flame" d="M115 24 C115 24 107 36 115 43 C123 36 115 24 115 24 Z" fill="#FF9E00"/>
+                            <path class="flame" d="M115 30 C115 30 111 37 115 41 C119 37 115 30 115 30 Z" fill="#FFF3B0"/>
+                            <path class="flame" d="M143 24 C143 24 135 36 143 43 C151 36 143 24 143 24 Z" fill="#FF9E00"/>
+                            <path class="flame" d="M143 30 C143 30 139 37 143 41 C147 37 143 30 143 30 Z" fill="#FFF3B0"/>
+                        </g>
+
+                        <!-- Humo al soplar -->
+                        <g id="candle-smoke" class="hidden">
+                            <circle cx="115" cy="32" r="5" fill="#CBD5E1" class="smoke"/>
+                            <circle cx="143" cy="32" r="5" fill="#CBD5E1" class="smoke"/>
+                        </g>
+                    </svg>
+                </div>
+            </div>
+
+            <!-- Botón de acción del pastel -->
+            <div class="flex justify-center gap-3">
+                <button id="blow-btn" onclick="blowCandle()" class="px-8 py-3.5 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-display font-bold shadow-lg shadow-pink-300/50 transition transform active:scale-95">
+                    🌬️ Soplar las Velas
+                </button>
+                <button id="relight-btn" onclick="relightCandle()" class="hidden px-6 py-3.5 rounded-full bg-amber-100 hover:bg-amber-200 text-amber-800 font-display font-bold transition">
+                    🔥 Encender de nuevo
+                </button>
+            </div>
+
+            <!-- Mensaje final revelado al soplar -->
+            <div id="wish-message" class="hidden mt-8 p-6 rounded-2xl bg-gradient-to-r from-pink-50 via-purple-50 to-amber-50 border border-champagneGold">
+                <h3 class="font-script text-4xl text-pink-600 mb-2">¡Deseo enviado al universo! ✨</h3>
+                <p class="text-gray-700 text-base">
+                    Que cada uno de tus deseos se cumpla este año, Briana. ¡Feliz cumpleaños número 14! Recuerda siempre lo mucho que te quiero. 🎉🎂💖
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. SECCIÓN FINAL: UN DETALLE DESDE EL CORAZÓN (PREGUNTA ESPECIAL) -->
+    <section id="propuesta" class="relative py-16 px-4 max-w-3xl mx-auto text-center z-10">
+        <div class="bg-gradient-to-br from-pink-100/90 via-white/95 to-purple-100/90 backdrop-blur-md rounded-3xl p-8 sm:p-12 shadow-2xl border-2 border-pink-300 relative overflow-hidden">
+            <div class="text-4xl mb-3 animate-heartbeat">🌹💖🌹</div>
+            <span class="text-rose-500 font-bold text-xs uppercase tracking-widest">Una pregunta sincera para ti</span>
+            <h2 class="font-script text-4xl sm:text-5xl text-pink-600 mt-2 mb-4">
+                Briana, me encantaría estar a tu lado...
+            </h2>
+            <p class="text-gray-700 text-base sm:text-lg max-w-xl mx-auto leading-relaxed mb-8">
+                Porque eres la única en mi vida, porque te quiero demasiado y no te quiero perder por nada del mundo:
+                <strong class="block text-purple-700 text-lg sm:text-xl mt-3">
+                    ¿Me darías la oportunidad de estar a tu lado y ser tu novio? 💕
+                </strong>
+            </p>
+
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <button onclick="acceptProposal()" class="w-full sm:w-auto px-9 py-4 rounded-full bg-gradient-to-r from-pink-500 via-rose-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 text-white font-display font-bold text-base shadow-xl shadow-pink-300/60 transition transform hover:scale-105 active:scale-95 flex items-center justify-center gap-2">
+                    <span>¡Sí, me encantaría!</span> 💖🌸
+                </button>
+                <button onclick="showSweetNote()" class="w-full sm:w-auto px-7 py-4 rounded-full bg-white hover:bg-purple-50 text-purple-700 border-2 border-purple-200 font-display font-semibold text-sm shadow-sm transition">
+                    Lo hablamos cuando nos veamos ✨
+                </button>
+            </div>
+
+            <!-- Respuesta al pulsar botón -->
+            <div id="proposal-response" class="hidden mt-8 p-6 rounded-2xl bg-white/90 border-2 border-pink-300 shadow-inner">
+                <p id="proposal-text" class="font-script text-3xl sm:text-4xl text-rose-500 leading-snug"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer class="text-center py-8 px-4 text-gray-500 text-sm relative z-10">
+        <p>Hecho con todo mi amor para <span class="text-pink-500 font-semibold">Briana en sus 14 años</span> 🌹💖✨</p>
+    </footer>
+
+    <!-- Caja de notificación personalizada (reemplazo seguro de alert) -->
+    <div id="toast-box" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 bg-white border-l-4 border-pink-400 shadow-xl rounded-xl px-5 py-3.5 text-sm font-medium text-gray-700 flex items-center gap-3">
+        <span class="text-xl">💖</span>
+        <span id="toast-text">¡Listo!</span>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. PARTÍCULAS FLOTANTES (CORAZONES Y FLORES)
+        // ==========================================
+        function createFloatingParticles() {
+            const container = document.getElementById('particles-container');
+            const symbols = ['💖', '🌸', '🌹', '🌷', '✨', '💕', '💐', '🦋'];
+            const count = 26;
+
+            for (let i = 0; i < count; i++) {
+                const el = document.createElement('div');
+                el.className = 'floating-particle text-lg sm:text-2xl select-none';
+                el.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+                el.style.left = Math.random() * 100 + 'vw';
+                el.style.animationDuration = (11 + Math.random() * 14) + 's';
+                el.style.animationDelay = (Math.random() * 10) + 's';
+                container.appendChild(el);
+            }
+        }
+
+        // ==========================================
+        // 2. LLUVIA DE CORAZONES, FLORES Y CONFETI
+        // ==========================================
+        function launchHeartAndFlowerRain() {
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 90,
+                    spread: 85,
+                    origin: { y: 0.65 },
+                    colors: ['#FF4D6D', '#FF8FAB', '#FFD6E0', '#E2D1F9', '#F3D08A']
+                });
+            }
+
+            // Lluvia extra de emojis de flores y corazones
+            const container = document.getElementById('particles-container');
+            const burstEmojis = ['💖', '🌹', '🌸', '💕', '🌷', '💐'];
+            for (let i = 0; i < 16; i++) {
+                const el = document.createElement('div');
+                el.className = 'floating-particle text-2xl sm:text-3xl select-none';
+                el.textContent = burstEmojis[Math.floor(Math.random() * burstEmojis.length)];
+                el.style.left = (10 + Math.random() * 80) + 'vw';
+                el.style.animationDuration = (4 + Math.random() * 4) + 's';
+                el.style.animationDelay = '0s';
+                container.appendChild(el);
+                setTimeout(() => el.remove(), 8000);
+            }
+        }
+
+        // ==========================================
+        // 3. GALERÍA DE RECUERDOS (FOTOS Y VIDEOS)
+        // ==========================================
+        function showToast(msg) {
+            const toast = document.getElementById('toast-box');
+            document.getElementById('toast-text').textContent = msg;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3400);
+        }
+
+        function assignMediaToSlot(file, slotIndex, type) {
+            const url = URL.createObjectURL(file);
+            const preview = document.getElementById(`preview-${slotIndex}`);
+            const placeholder = document.getElementById(`placeholder-${slotIndex}`);
+            const changeBtn = document.getElementById(`change-${slotIndex}`);
+
+            preview.src = url;
+            preview.classList.remove('hidden');
+            placeholder.classList.add('hidden');
+            changeBtn.classList.remove('hidden');
+
+            if (type === 'video') {
+                preview.load();
+            }
+        }
+
+        function loadSingleMedia(event, slotIndex, type) {
+            const file = event.target.files[0];
+            if (!file) return;
+            assignMediaToSlot(file, slotIndex, type);
+            showToast(`¡${file.name} cargado en el marco!`);
+            launchHeartAndFlowerRain();
+        }
+
+        function handleBulkFiles(event) {
+            const files = Array.from(event.target.files);
+            if (!files.length) return;
+
+            let imageSlot = 0;
+            let videoSlot = 2;
+
+            files.forEach(file => {
+                const name = file.name.toLowerCase();
+                if (file.type.startsWith('image/')) {
+                    if (name.includes('1000148142') || name.includes('foto1')) {
+                        assignMediaToSlot(file, 0, 'image');
+                    } else if (name.includes('1000148133') || name.includes('foto2')) {
+                        assignMediaToSlot(file, 1, 'image');
+                    } else if (imageSlot <= 1) {
+                        assignMediaToSlot(file, imageSlot++, 'image');
+                    }
+                } else if (file.type.startsWith('video/')) {
+                    if (name.includes('video_1') || name.includes('video1')) {
+                        assignMediaToSlot(file, 2, 'video');
+                    } else if (name.includes('video_2') || name.includes('video2')) {
+                        assignMediaToSlot(file, 3, 'video');
+                    } else if (videoSlot <= 3) {
+                        assignMediaToSlot(file, videoSlot++, 'video');
+                    }
+                }
+            });
+
+            showToast(`Se cargaron ${files.length} recuerdo(s) de Briana 💖`);
+            launchHeartAndFlowerRain();
+        }
+
+        // ==========================================
+        // 4. PASTEL VIRTUAL INTERACTIVO
+        // ==========================================
+        let candleLit = true;
+
+        function blowCandle() {
+            if (!candleLit) return;
+            candleLit = false;
+
+            document.getElementById('candle-flames').classList.add('hidden');
+            document.getElementById('candle-smoke').classList.remove('hidden');
+            document.getElementById('blow-btn').classList.add('hidden');
+            document.getElementById('relight-btn').classList.remove('hidden');
+            document.getElementById('wish-message').classList.remove('hidden');
+            document.getElementById('cake-instruction').textContent = "¡Velas sopladas! Que todos tus deseos se hagan realidad.";
+
+            launchHeartAndFlowerRain();
+            setTimeout(launchHeartAndFlowerRain, 500);
+        }
+
+        function relightCandle() {
+            candleLit = true;
+            document.getElementById('candle-flames').classList.remove('hidden');
+            document.getElementById('candle-smoke').classList.add('hidden');
+            document.getElementById('blow-btn').classList.remove('hidden');
+            document.getElementById('relight-btn').classList.add('hidden');
+            document.getElementById('wish-message').classList.add('hidden');
+            document.getElementById('cake-instruction').textContent = "Cierra los ojos, pide tu mejor deseo para estos 14 años y haz clic en la vela o en el botón para soplarla.";
+        }
+
+        // ==========================================
+        // 5. RESPUESTAS A LA PREGUNTA FINAL
+        // ==========================================
+        function acceptProposal() {
+            const box = document.getElementById('proposal-response');
+            const text = document.getElementById('proposal-text');
+            box.classList.remove('hidden');
+            text.textContent = "¡Me haces la persona más feliz del mundo, Briana! Prometo cuidarte, quererte mucho y estar siempre a tu lado. 💖🌹✨";
+            launchHeartAndFlowerRain();
+            setTimeout(launchHeartAndFlowerRain, 450);
+            setTimeout(launchHeartAndFlowerRain, 900);
+        }
+
+        function showSweetNote() {
+            const box = document.getElementById('proposal-response');
+            const text = document.getElementById('proposal-text');
+            box.classList.remove('hidden');
+            text.textContent = "Esperaré con toda la ilusión del mundo ese momento, porque tú vales cada segundo. ¡Feliz cumpleaños #14, mi niña hermosa! 🌸💕";
+            launchHeartAndFlowerRain();
+        }
+
+        // ==========================================
+        // 6. REPRODUCTOR MP3 (musica.mp3) CON RESPALDO
+        // ==========================================
+        let isPlaying = false;
+        let melodyInterval = null;
+        let synth = null;
+
+        function loadCustomMP3(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const audioEl = document.getElementById('musica-fondo');
+            audioEl.src = URL.createObjectURL(file);
+            audioEl.load();
+            showToast(`Canción cargada: ${file.name} 🎵`);
+            if (!isPlaying) {
+                toggleMusic();
+            } else {
+                audioEl.play();
+            }
+        }
+
+        async function toggleMusic() {
+            const btnText = document.getElementById('music-text');
+            const btnIcon = document.getElementById('music-icon');
+            const audioEl = document.getElementById('musica-fondo');
+
+            if (isPlaying) {
+                isPlaying = false;
+                audioEl.pause();
+                clearTimeout(melodyInterval);
+                btnText.textContent = "Música";
+                btnIcon.className = "fas fa-play";
+                return;
+            }
+
+            // Intentar reproducir el archivo MP3 vinculado (<audio id="musica-fondo">)
+            try {
+                await audioEl.play();
+                isPlaying = true;
+                btnText.textContent = "Pausar";
+                btnIcon.className = "fas fa-pause";
+                return;
+            } catch (mp3Error) {
+                // Si aún no se ha colocado "musica.mp3" en la carpeta, usa la melodía suave de respaldo
+                console.log("Usando melodía suave de respaldo mientras agregas tu musica.mp3");
+            }
+
+            try {
+                await Tone.start();
+                if (!synth) {
+                    synth = new Tone.PolySynth(Tone.Synth, {
+                        oscillator: { type: "sine" },
+                        envelope: { attack: 0.08, decay: 0.3, sustain: 0.2, release: 1.2 }
+                    }).toDestination();
+                    synth.volume.value = -8;
+                }
+
+                isPlaying = true;
+                btnText.textContent = "Pausar";
+                btnIcon.className = "fas fa-pause";
+
+                const notes = [
+                    { note: "C4", dur: 0.35 }, { note: "C4", dur: 0.35 }, { note: "D4", dur: 0.7 }, { note: "C4", dur: 0.7 }, { note: "F4", dur: 0.7 }, { note: "E4", dur: 1.2 },
+                    { note: "C4", dur: 0.35 }, { note: "C4", dur: 0.35 }, { note: "D4", dur: 0.7 }, { note: "C4", dur: 0.7 }, { note: "G4", dur: 0.7 }, { note: "F4", dur: 1.2 },
+                    { note: "C4", dur: 0.35 }, { note: "C4", dur: 0.35 }, { note: "C5", dur: 0.7 }, { note: "A4", dur: 0.7 }, { note: "F4", dur: 0.7 }, { note: "E4", dur: 0.7 }, { note: "D4", dur: 1.2 },
+                    { note: "Bb4", dur: 0.35 }, { note: "Bb4", dur: 0.35 }, { note: "A4", dur: 0.7 }, { note: "F4", dur: 0.7 }, { note: "G4", dur: 0.7 }, { note: "F4", dur: 1.4 }
+                ];
+
+                let step = 0;
+                function playNextNote() {
+                    if (!isPlaying) return;
+                    const current = notes[step];
+                    synth.triggerAttackRelease(current.note, current.dur * 0.9);
+                    step = (step + 1) % notes.length;
+                    melodyInterval = setTimeout(playNextNote, current.dur * 650);
+                }
+
+                playNextNote();
+            } catch (err) {
+                console.error("Audio error:", err);
+            }
+        }
+
+        // Inicializar al cargar
+        window.addEventListener('DOMContentLoaded', () => {
+            createFloatingParticles();
+            setTimeout(launchHeartAndFlowerRain, 600);
+        });
+    </script>
+</body>
+</html>
